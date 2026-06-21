@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # Launch your main loop script
-CMD ["python", "bot.py"]
+CMD ["python", "run_bot.py"]
