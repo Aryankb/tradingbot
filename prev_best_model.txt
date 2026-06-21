@@ -1,0 +1,119 @@
+THE ETH model is inside models/ and is currently in Use
+
+
+
+
+(trading-bot) PS C:\Users\AryanKumarBaghel\TRADING BOT> python .\scripts\train_model.py --tune
+2026-05-24 06:08:54,823 [INFO] src.data.storage: Database ready at C:\Users\AryanKumarBaghel\TRADING BOT\data\trading_bot.db
+2026-05-24 06:08:54,824 [INFO] __main__: === Training pipeline: BTC/USDT ===
+2026-05-24 06:08:55,110 [INFO] __main__: Loaded 24000 raw candles.
+2026-05-24 06:08:55,175 [INFO] __main__: Feature engineering complete: 23999 rows.
+2026-05-24 06:08:55,219 [INFO] __main__: ATR range across dataset — min: 27.4470  max: 2224.6458  mean: 508.6006
+2026-05-24 06:08:55,595 [INFO] src.labeling.triple_barrier: Labels (n=23975) -- HOLD: 8583 (35.8%)  BUY: 7776 (32.4%)  SELL: 7616 (31.8%)
+2026-05-24 06:08:55,789 [INFO] __main__: Feature matrix: (23928, 384)  (labels trimmed for look-ahead safety)
+2026-05-24 06:08:55,789 [INFO] __main__: Starting Optuna search (50 trials)…
+2026-05-24 06:08:55,791 [INFO] src.model.tuner: Optuna search: 50 trials | train=16800 val=3600 | threshold=0.60
+Best trial: 23. Best value: 0.772727: 100%|█████████████████████████████████████| 50/50 [50:11<00:00, 60.24s/it]
+2026-05-24 06:59:07,721 [INFO] src.model.tuner: Best params (thresholded val precision=0.7727):
+  max_depth: 4
+  learning_rate: 0.01059301570799768
+  n_estimators: 522
+  subsample: 0.8205139994845032
+  colsample_bytree: 0.9199508046565842
+  min_child_weight: 5
+  gamma: 0.832256698703723
+  reg_alpha: 0.699571735176649
+  reg_lambda: 1.8890313934741652
+2026-05-24 06:59:07,721 [INFO] src.model.trainer: Walk-forward split -- train: 16800  valid: 3600  test: 3528
+2026-05-24 06:59:07,724 [INFO] src.model.trainer: Training class counts -- {0: 6144, 1: 5511, 2: 5145}
+2026-05-24 06:59:46,773 [INFO] src.model.trainer: P(BUY|SELL) distribution on test set -- p50=0.407  p75=0.459  p90=0.516  p95=0.557  p99=0.615  max=0.674
+2026-05-24 06:59:46,783 [INFO] src.model.trainer:   threshold=0.40  signals=1898  BUY_prec=0.419  SELL_prec=0.368
+2026-05-24 06:59:46,795 [INFO] src.model.trainer:   threshold=0.45  signals=1014  BUY_prec=0.469  SELL_prec=0.413
+2026-05-24 06:59:46,806 [INFO] src.model.trainer:   threshold=0.50  signals= 459  BUY_prec=0.520  SELL_prec=0.483
+2026-05-24 06:59:46,815 [INFO] src.model.trainer:   threshold=0.55  signals= 205  BUY_prec=0.504  SELL_prec=0.512
+2026-05-24 06:59:46,824 [INFO] src.model.trainer:   threshold=0.60  signals=  63  BUY_prec=0.200  SELL_prec=0.464
+2026-05-24 06:59:46,834 [INFO] src.model.trainer:   threshold=0.65  signals=   8  BUY_prec=0.333  SELL_prec=1.000
+2026-05-24 06:59:46,843 [INFO] src.model.trainer:   threshold=0.70  signals=   0  BUY_prec=0.000  SELL_prec=0.000
+2026-05-24 06:59:46,853 [INFO] src.model.trainer:   threshold=0.75  signals=   0  BUY_prec=0.000  SELL_prec=0.000
+2026-05-24 06:59:46,862 [INFO] src.model.trainer: Test set (threshold=0.60) -- signals: 63/3528  BUY precision: 0.2000  SELL precision: 0.4643
+2026-05-24 06:59:46,879 [INFO] src.model.trainer: --- Thresholded report (what the bot actually does) ---
+              precision    recall  f1-score   support
+
+        HOLD       0.35      0.99      0.51      1218
+         BUY       0.20      0.01      0.01      1079
+        SELL       0.46      0.01      0.02      1231
+
+    accuracy                           0.35      3528
+   macro avg       0.34      0.34      0.18      3528
+weighted avg       0.34      0.35      0.19      3528
+
+2026-05-24 06:59:46,892 [INFO] src.model.trainer: --- Raw model report (all predictions, for reference) ---
+              precision    recall  f1-score   support
+
+        HOLD       0.47      0.27      0.34      1218
+         BUY       0.38      0.60      0.47      1079
+        SELL       0.38      0.35      0.37      1231
+
+    accuracy                           0.40      3528
+   macro avg       0.41      0.41      0.39      3528
+weighted avg       0.41      0.40      0.39      3528
+
+2026-05-24 06:59:47,049 [INFO] src.model.trainer: Model saved -> C:\Users\AryanKumarBaghel\TRADING BOT\models\BTC_USDT_xgb.json
+2026-05-24 06:59:47,086 [INFO] __main__: Pipeline complete for BTC/USDT.
+2026-05-24 06:59:47,108 [INFO] __main__: === Training pipeline: ETH/USDT ===
+2026-05-24 06:59:47,208 [INFO] __main__: Loaded 24000 raw candles.
+2026-05-24 06:59:47,225 [INFO] __main__: Feature engineering complete: 23999 rows.
+2026-05-24 06:59:47,237 [INFO] __main__: ATR range across dataset — min: 2.5775  max: 143.4737  mean: 26.6931
+2026-05-24 06:59:47,336 [INFO] src.labeling.triple_barrier: Labels (n=23975) -- HOLD: 8396 (35.0%)  BUY: 7723 (32.2%)  SELL: 7856 (32.8%)
+2026-05-24 06:59:47,386 [INFO] __main__: Feature matrix: (23928, 384)  (labels trimmed for look-ahead safety)
+2026-05-24 06:59:47,386 [INFO] __main__: Starting Optuna search (50 trials)…
+2026-05-24 06:59:47,386 [INFO] src.model.tuner: Optuna search: 50 trials | train=16800 val=3600 | threshold=0.60
+Best trial: 34. Best value: 0.690476: 100%|███████████████████████████████████████████████████████| 50/50 [30:30<00:00, 36.61s/it]
+2026-05-24 07:30:17,893 [INFO] src.model.tuner: Best params (thresholded val precision=0.6905):
+  max_depth: 6
+  learning_rate: 0.015129178781510346
+  n_estimators: 201
+  subsample: 0.6317450330493153
+  colsample_bytree: 0.6985944427787575
+  min_child_weight: 8
+  gamma: 1.036592665056148
+  reg_alpha: 0.8584086595743117
+  reg_lambda: 0.003925209233550171
+2026-05-24 07:30:17,893 [INFO] src.model.trainer: Walk-forward split -- train: 16800  valid: 3600  test: 3528
+2026-05-24 07:30:17,894 [INFO] src.model.trainer: Training class counts -- {0: 5958, 1: 5423, 2: 5419}
+2026-05-24 07:30:44,787 [INFO] src.model.trainer: P(BUY|SELL) distribution on test set -- p50=0.403  p75=0.448  p90=0.496  p95=0.533  p99=0.622  max=0.749
+2026-05-24 07:30:44,795 [INFO] src.model.trainer:   threshold=0.40  signals=1839  BUY_prec=0.446  SELL_prec=0.326
+2026-05-24 07:30:44,800 [INFO] src.model.trainer:   threshold=0.45  signals= 847  BUY_prec=0.528  SELL_prec=0.295
+2026-05-24 07:30:44,806 [INFO] src.model.trainer:   threshold=0.50  signals= 330  BUY_prec=0.545  SELL_prec=0.368
+2026-05-24 07:30:44,813 [INFO] src.model.trainer:   threshold=0.55  signals= 118  BUY_prec=0.490  SELL_prec=0.435
+2026-05-24 07:30:44,817 [INFO] src.model.trainer:   threshold=0.60  signals=  49  BUY_prec=0.000  SELL_prec=0.514
+2026-05-24 07:30:44,822 [INFO] src.model.trainer:   threshold=0.65  signals=  24  BUY_prec=0.000  SELL_prec=0.500
+2026-05-24 07:30:44,829 [INFO] src.model.trainer:   threshold=0.70  signals=   7  BUY_prec=0.000  SELL_prec=0.000
+2026-05-24 07:30:44,833 [INFO] src.model.trainer:   threshold=0.75  signals=   0  BUY_prec=0.000  SELL_prec=0.000
+2026-05-24 07:30:44,839 [INFO] src.model.trainer: Test set (threshold=0.60) -- signals: 49/3528  BUY precision: 0.0000  SELL precision: 0.5143
+2026-05-24 07:30:44,848 [INFO] src.model.trainer: --- Thresholded report (what the bot actually does) ---
+              precision    recall  f1-score   support
+
+        HOLD       0.35      1.00      0.52      1224
+         BUY       0.00      0.00      0.00      1137
+        SELL       0.51      0.02      0.03      1167
+
+    accuracy                           0.35      3528
+   macro avg       0.29      0.34      0.18      3528
+weighted avg       0.29      0.35      0.19      3528
+
+2026-05-24 07:30:44,859 [INFO] src.model.trainer: --- Raw model report (all predictions, for reference) ---
+              precision    recall  f1-score   support
+
+        HOLD       0.47      0.32      0.38      1224
+         BUY       0.41      0.45      0.43      1137
+        SELL       0.32      0.40      0.36      1167
+
+    accuracy                           0.39      3528
+   macro avg       0.40      0.39      0.39      3528
+weighted avg       0.40      0.39      0.39      3528
+
+2026-05-24 07:30:44,964 [INFO] src.model.trainer: Model saved -> C:\Users\AryanKumarBaghel\TRADING BOT\models\ETH_USDT_xgb.json
+2026-05-24 07:30:44,966 [INFO] __main__: Pipeline complete for ETH/USDT.
+
+Training complete.  Run  python run_bot.py  to start the simulation.
